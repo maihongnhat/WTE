@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
 		ALL_DISHES_FILE = new File(allDishesFilePath);		
 		System.out.println(ALL_DISHES_FILE.getPath());
 		myIO = new MyIO(ALL_DISHES_FILE);
+		loadFile();
 	}
 
 	@Override
@@ -32,6 +33,14 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public void loadFile(){
+		EditText edit_dishes = (EditText) findViewById(R.id.edit_dishes);
+		String dishesString = MyUtils.restoreStringfromArrayList(myIO.readFile());
+		System.out.println("Content of targetFile:");
+		System.out.println(dishesString);
+		edit_dishes.setText(dishesString);
 	}
 	
 	public void chooseRandomDish(View view){
@@ -47,6 +56,7 @@ public class MainActivity extends Activity {
 		myIO.writeFile(dishesString);		
 		
 	}
+	
 	
 
 	private LinearLayout MainActivityLayout;

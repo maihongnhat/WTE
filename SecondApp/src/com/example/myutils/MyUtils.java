@@ -10,7 +10,6 @@ public class MyUtils {
 		String[] strArr = inputString.split("\n");
 		
 		for (String str : strArr){
-			System.out.println(str);
 			outputStringList.add(str);
 		}
 		

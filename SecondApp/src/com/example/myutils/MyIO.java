@@ -19,7 +19,6 @@ public class MyIO {
 				targetFile.createNewFile();
 			}
 			bufferedReader = new BufferedReader(new FileReader(targetFile));
-			bufferedWriter = new BufferedWriter(new FileWriter(targetFile));
 		}catch(FileNotFoundException fnfe){
 			message = "MyIO's constructor: Can't not find "+file.getAbsolutePath();
 			System.out.println(message);
@@ -34,20 +33,29 @@ public class MyIO {
 		return file.exists();
 	}
 	
-	public ArrayList<String> readFile(){
-		ArrayList<String> fileContent =  new ArrayList<String>();
-		String line;
-		
+	public void createFile(){
 		try{
-			do{
-				line = bufferedReader.readLine();
-				fileContent.add(line);
-			}while(line != null);			
+			targetFile.createNewFile();
 		}catch(IOException ioe){
-			message = "MyIO's writefile: Can't not read "+targetFile.getAbsolutePath();
+			message = "MyIO's createFile(): Can't not create "+targetFile.getAbsolutePath();
 			System.out.println(message);
 		}
-		
+	}
+	
+	public ArrayList<String> readFile(){		
+		ArrayList<String> fileContent =  new ArrayList<String>();		
+		String line;
+		if(targetFile.exists()){
+			try{
+				while( (line = bufferedReader.readLine()) != null )
+					fileContent.add(line);					
+			}catch(IOException ioe){
+				message = "MyIO's writefile: Can't not read "+targetFile.getAbsolutePath();
+				System.out.println(message);
+			}
+		}else{
+			createFile();
+		}
 		return fileContent;
 	}
 	
@@ -57,8 +65,10 @@ public class MyIO {
 			return;
 		}		
 		try{
+			bufferedWriter = new BufferedWriter(new FileWriter(targetFile));
 			bufferedWriter.write(content);
 			bufferedWriter.flush();
+			bufferedWriter.close();
 		}catch(NullPointerException npe){
 			npe.printStackTrace();
 		}
@@ -69,12 +79,14 @@ public class MyIO {
 		System.out.println("Write string to "+targetFile.getAbsolutePath()+" successfully.");
 	}
 	
-	public void writeFile(ArrayList<String> strArr){
+	public void writeFile(ArrayList<String> strArr){		
 		try{
+			bufferedWriter = new BufferedWriter(new FileWriter(targetFile));
 			for(String str : strArr){
 				bufferedWriter.write(str);
 				bufferedWriter.flush();
 			}
+			bufferedWriter.close();
 		}catch(IOException ioe){
 			message = "MyIO's writefile: Can't not find "+targetFile.getAbsolutePath();
 			System.out.println(message);
