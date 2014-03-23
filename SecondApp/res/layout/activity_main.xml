@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical"
+    android:background="@color/mybackgroundcolor" > 
+     
+    <EditText
+        android:id="@+id/edit_dishes"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:inputType="textMultiLine"
+        android:hint="@string/edit_dishes"
+        android:textColor="@color/mytextcolor" />"
+    <Button
+        android:id="@+id/button_OK"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:hint="@string/button_OK"
+        android:onClick="chooseRandomDish" />
+    <EditText
+        android:id="@+id/edit_todaydish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_todaydish"
+        android:textColor="@color/mytextcolor" />
+    
+</LinearLayout>
