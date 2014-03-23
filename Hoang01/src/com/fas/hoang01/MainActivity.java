@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
         			  Intent intent = new Intent(MainActivity.this, Second.class);
     			      intent.putExtra("theChosenDish", chosen);
     			      startActivity(intent);
-    			      //Lam 
+    			      //Lam test
                 }
             }
         );
