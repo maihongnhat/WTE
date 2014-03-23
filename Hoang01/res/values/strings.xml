@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Chọn món</string>
+    <string name="action_settings">Cài đặt</string>
+    <string name="okbutton">OK</string>
+    <string name="hello_world">Hãy nhập tên\n các món ăn</string>
+    <string name="dish1">Hãy nhập món 1</string>
+    <string name="dish2">Hãy nhập món 2</string>
+    <string name="dish3">Hãy nhập món 3</string>
+    <string name="dish4">Hãy nhập món 4</string>
+	<string name="bon">BON \nAPETITÉ!</string>
+</resources>
