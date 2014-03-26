@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
 		myIO = new MyIO(ALL_DISHES_FILE);
 		loadFile();
 	}
+	//test
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
