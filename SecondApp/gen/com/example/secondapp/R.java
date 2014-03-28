@@ -11,7 +11,8 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int mycolor=0x7f040000;
+        public static final int mybackgroundcolor=0x7f040000;
+        public static final int mytextcolor=0x7f040001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
