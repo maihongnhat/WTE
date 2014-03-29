@@ -107,6 +107,7 @@ public class MyFileLib {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 			for(String str : strArr){
 				bufferedWriter.write(str);
+				bufferedWriter.write("\n");
 				bufferedWriter.flush();
 			}
 			bufferedWriter.close();

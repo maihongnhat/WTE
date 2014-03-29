@@ -2,9 +2,11 @@ package com.fas.what2eat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import com.fas.lib.MyFileLib;
+import com.fas.lib.MyLogger;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -156,10 +159,19 @@ public class MainActivity extends Activity {
 				}
 					
 			});
-		d.show();
-				
-		
+		d.show();						
 	}
 
+	// Chon mon ngau nhien
+	public void generateRandomDish(View view){
+		ArrayList<String> arrayList = new ArrayList<String>(dishList); 
+		myIO.overwriteFile(arrayList, ALL_DISHES_FILE);		
+		showPopup();
+	}
+	
+	// hien thi Popup - Hoang
+	public void showPopup(){
+		System.out.println("test");
+	}
 
 }

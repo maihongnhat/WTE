@@ -1,10 +1,15 @@
 package com.fas.lib;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MyStringLib {
-	
+
+	/*
+	 * Method name		: WriteFile
+	 * Description		: convert String to ArrayList<String>
+	 * Creator			: NhatMH
+	 * Last modified by	: -
+	 */
 	public static ArrayList<String> getArrayListFromString(String inputString){
 		ArrayList<String> outputStringList = new ArrayList<String>();
 		String[] strArr = inputString.split("\n");
@@ -16,6 +21,12 @@ public class MyStringLib {
 		return outputStringList;
 	}
 	
+	/*
+	 * Method name		: WriteFile
+	 * Description		: convert ArrayList<String> to a multi-line String
+	 * Creator			: NhatMH
+	 * Last modified by	: -
+	 */
 	public static String getStringfromArrayList(ArrayList<String> stringArrayList){
 		StringBuilder originalString = new StringBuilder();
 		
