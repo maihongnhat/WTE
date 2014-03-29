@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.fas.lib.MyIO;
+import com.fas.lib.MyFileLib;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -31,8 +31,8 @@ public class MainActivity extends Activity {
 	Random r = new Random();
 	
     public static final String ALL_DISHES_FILENAME = "AllDishes.txt";
-	public static File ALL_DISHES_FILE;
-	public static MyIO myIO;
+	public File ALL_DISHES_FILE;
+	public MyFileLib myIO;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,8 @@ public class MainActivity extends Activity {
 		
     	String allDishesFilePath = getFilesDir() + "/" + ALL_DISHES_FILENAME;
 		ALL_DISHES_FILE = new File(allDishesFilePath);		
-		myIO = new MyIO(ALL_DISHES_FILE);
-		dishList = myIO.readFile();
+		myIO = new MyFileLib();
+		myIO.createFile(ALL_DISHES_FILE);
 		
 		//Them dishList vao listview - Nhat
 		initDishes();
@@ -129,7 +129,7 @@ public class MainActivity extends Activity {
 	//Doc danh sach mon tu file - Nhat
 	private void initDishes()
 	{
-		
+		dishList = myIO.readFile(ALL_DISHES_FILE);
 	}
 	
 	// Them mon

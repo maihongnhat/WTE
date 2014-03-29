@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import com.fas.lib.MyIO;
+import com.fas.lib.MyFileLib;
  
 public class SplashScreen extends Activity {
  
