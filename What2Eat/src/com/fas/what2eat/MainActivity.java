@@ -9,8 +9,10 @@ import com.fas.lib.MyFileLib;
 import com.fas.lib.MyLogger;
 
 import android.os.Bundle;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.pm.LabeledIntent;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,18 +22,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
 
 	//Danh sach cac mon
 	List<String> dishList = new ArrayList<String>();
 	ArrayAdapter<String> sa;
 	Random r = new Random();
+	
+    LinearLayout layoutOfPopup;
+    PopupWindow popupMessage;
+    Button popupButton, insidePopupButton;
+    TextView popupText;
+    Dialog randomDialog;
 	
     public static final String ALL_DISHES_FILENAME = "AllDishes.txt";
 	public File ALL_DISHES_FILE;
@@ -80,19 +90,17 @@ public class MainActivity extends Activity {
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
-							String mon = et.getText().toString();
+							String mon = et.getText().toString();																				
 							MainActivity.this.dishList.set(pos, mon);
 							MainActivity.this.sa.notifyDataSetChanged();
-							de.dismiss();
-							
-							
-						}
-							
+							de.dismiss();														
+						}							
 					});
 				de.show();
 			}
 		});
-	
+		
+		init();
 	}
 
 	@Override
@@ -124,6 +132,7 @@ public class MainActivity extends Activity {
 		AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) item.getMenuInfo();
 		dishList.remove(aInfo.position);
 		sa.notifyDataSetChanged();
+		saveFile();
 		return true;
 		
 	}
@@ -159,19 +168,62 @@ public class MainActivity extends Activity {
 				}
 					
 			});
-		d.show();						
+		d.show();
+		saveFile();
 	}
 
-	// Chon mon ngau nhien
-	public void generateRandomDish(View view){
-		ArrayList<String> arrayList = new ArrayList<String>(dishList); 
-		myIO.overwriteFile(arrayList, ALL_DISHES_FILE);		
-		showPopup();
-	}
+
+	public void init() {
+//        popupButton = (Button) findViewById(R.id.buttonRandom);             
+//        popupText = new TextView(this);
+//        insidePopupButton = new Button(this);
+//        layoutOfPopup = new LinearLayout(this);
+//        insidePopupButton.setText("OK");
+//        popupText.setText("This is Popup Window.press OK to dismiss it.");
+//        popupText.setPadding(0, 0, 0, 20);
+//        layoutOfPopup.setOrientation(1);
+//        layoutOfPopup.addView(popupText);
+//        layoutOfPopup.addView(insidePopupButton);
+		
+		this.randomDialog = new Dialog(this);		
+		randomDialog.setContentView(R.layout.randomdialog);
+		randomDialog.setTitle("Hom nay an...");
+		randomDialog.setCancelable(true);
+		final EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
+		
+		final int randomDishId = r.nextInt(dishList.size());
+		et.setText(dishList.get(randomDishId));
+		et.setEnabled(false);
+		
+		Button buttonRandomAgain = (Button) randomDialog.findViewById(R.id.buttonRandomAgain);
+		buttonRandomAgain.setOnClickListener(new View.OnClickListener()
+			{
+
+				@Override
+				public void onClick(View v) {
+					int randomDishId = r.nextInt(dishList.size());
+					et.setText(dishList.get(randomDishId));
+				}							
+			});
+    }
+ 
+    public void showPopup() {
+//        popupButton.setOnClickListener(this);
+//        insidePopupButton.setOnClickListener(this);
+//        popupMessage = new PopupWindow(layoutOfPopup, LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+//        popupMessage.setContentView(layoutOfPopup);
+//        popupMessage.showAsDropDown(popupButton, 0, 0);
+//        popupText.setText("This is the one you should have today: "+ chosen);
+    	randomDialog.show();
+    }
 	
-	// hien thi Popup - Hoang
-	public void showPopup(){
-		System.out.println("test");
-	}
-
+    public void saveFile(){
+		ArrayList<String> arrayList = new ArrayList<String>(dishList); 
+		myIO.overwriteFile(arrayList, ALL_DISHES_FILE);	
+    }
+    
+    public void randomDish(View v){
+    	saveFile();
+		showPopup();
+    }
 }

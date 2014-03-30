@@ -23,9 +23,14 @@ public class MyFileLib {
 	 * Creator			: NhatMH
 	 * Last modified by	: -
 	 */
+	
+	//====Name====//
+	//
+	//
 	public boolean checkFileExistence(File file){
 		return file.exists();
 	}
+	//=====END=====//
 
 	/*
 	 * Method name		: createFile
