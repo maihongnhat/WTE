@@ -46,12 +46,14 @@ public class MainActivity extends Activity{
     public static final String ALL_DISHES_FILENAME = "AllDishes.txt";
 	public File ALL_DISHES_FILE;
 	public MyFileLib myIO;
+	public MyLogger myLogger;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		MyLogger myLogger = new MyLogger();
     	String allDishesFilePath = getFilesDir() + "/" + ALL_DISHES_FILENAME;
 		ALL_DISHES_FILE = new File(allDishesFilePath);		
 		myIO = new MyFileLib();
@@ -128,7 +130,7 @@ public class MainActivity extends Activity{
 	@Override
 	public boolean onContextItemSelected(MenuItem item)
 	{
-		int itemId = item.getItemId();
+//		int itemId = item.getItemId();
 		AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) item.getMenuInfo();
 		dishList.remove(aInfo.position);
 		sa.notifyDataSetChanged();
@@ -136,12 +138,16 @@ public class MainActivity extends Activity{
 		return true;
 		
 	}
-	
-	
+		
 	//Doc danh sach mon tu file - Nhat
+	@SuppressWarnings("unchecked")
 	private void initDishes()
 	{
-		dishList = myIO.readFile(ALL_DISHES_FILE);
+		if(!myIO.checkEmptyFile(ALL_DISHES_FILE)){
+			dishList = (ArrayList<String>) myIO.readObjectFromFile(ALL_DISHES_FILE);
+		}else{
+			dishList = new ArrayList<String>();
+		}
 	}
 	
 	// Them mon
@@ -155,44 +161,26 @@ public class MainActivity extends Activity{
 		Button b = (Button) d.findViewById(R.id.btThem);
 		b.setOnClickListener(new View.OnClickListener()
 			{
-
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					String mon = et.getText().toString();
 					MainActivity.this.dishList.add(mon);
 					MainActivity.this.sa.notifyDataSetChanged();
-					d.dismiss();
-					
-					
-				}
-					
+					saveFile();
+					d.dismiss();										
+				}					
 			});
 		d.show();
-		saveFile();
 	}
 
 
 	public void init() {
-//        popupButton = (Button) findViewById(R.id.buttonRandom);             
-//        popupText = new TextView(this);
-//        insidePopupButton = new Button(this);
-//        layoutOfPopup = new LinearLayout(this);
-//        insidePopupButton.setText("OK");
-//        popupText.setText("This is Popup Window.press OK to dismiss it.");
-//        popupText.setPadding(0, 0, 0, 20);
-//        layoutOfPopup.setOrientation(1);
-//        layoutOfPopup.addView(popupText);
-//        layoutOfPopup.addView(insidePopupButton);
-		
 		this.randomDialog = new Dialog(this);		
 		randomDialog.setContentView(R.layout.randomdialog);
 		randomDialog.setTitle("Hom nay an...");
 		randomDialog.setCancelable(true);
 		final EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
-		
-		final int randomDishId = r.nextInt(dishList.size());
-		et.setText(dishList.get(randomDishId));
 		et.setEnabled(false);
 		
 		Button buttonRandomAgain = (Button) randomDialog.findViewById(R.id.buttonRandomAgain);
@@ -208,22 +196,18 @@ public class MainActivity extends Activity{
     }
  
     public void showPopup() {
-//        popupButton.setOnClickListener(this);
-//        insidePopupButton.setOnClickListener(this);
-//        popupMessage = new PopupWindow(layoutOfPopup, LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-//        popupMessage.setContentView(layoutOfPopup);
-//        popupMessage.showAsDropDown(popupButton, 0, 0);
-//        popupText.setText("This is the one you should have today: "+ chosen);
+    	EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
+    	int randomDishId = r.nextInt(dishList.size());
+		et.setText(dishList.get(randomDishId));
     	randomDialog.show();
     }
 	
     public void saveFile(){
 		ArrayList<String> arrayList = new ArrayList<String>(dishList); 
-		myIO.overwriteFile(arrayList, ALL_DISHES_FILE);	
+		myIO.writeObjectToFile(arrayList, ALL_DISHES_FILE);
     }
     
     public void randomDish(View v){
-    	saveFile();
 		showPopup();
     }
 }

@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class MyFileLib {
@@ -17,26 +19,15 @@ public class MyFileLib {
 		
 	}
 	
-	/*
-	 * Method name		: checkFileExistence
-	 * Description		: check if the target file existed (return true if "exist", return false = "not exist")
-	 * Creator			: NhatMH
-	 * Last modified by	: -
+	/* Purpose		: check if the target file existed (return true if "exist", return false = "not exist")
+	 * PIC			: NhatMH
 	 */
-	
-	//====Name====//
-	//
-	//
 	public boolean checkFileExistence(File file){
 		return file.exists();
 	}
-	//=====END=====//
 
-	/*
-	 * Method name		: createFile
-	 * Description		: create new file
-	 * Creator			: NhatMH
-	 * Last modified by	: -
+	/* Purpose		: createFile
+	 * PIC			: NhatMH
 	 */	
 	public void createFile(File file){
 		try{
@@ -49,14 +40,11 @@ public class MyFileLib {
 		}
 	}
 	
-	/*
-	 * Method name		: readFile
-	 * Description		: create an ArrayList<String> containing content of the specified file
-	 * Creator			: NhatMH
-	 * Last modified by	: -
+	/* Purpose		: create an ArrayList<String> containing content of the specified file
+	 * PIC			: NhatMH
 	 */	
 	@SuppressWarnings("finally")
-	public ArrayList<String> readFile(File file){
+	public ArrayList<String> readTextFile(File file){
 		ArrayList<String> fileContent =  new ArrayList<String>();
 		String line;
 		
@@ -79,13 +67,10 @@ public class MyFileLib {
 		}		
 	}
 	
-	/*
-	 * Method name		: WriteFile
-	 * Description		: write a String to the specified file (Overwrite)
-	 * Creator			: NhatMH
-	 * Last modified by	: -
+	/* Purpose		: write a String to the specified file (Overwrite)
+	 * PIC			: NhatMH
 	 */	
-	public void overwriteFile(String content, File file){
+	public void overwriteTextFile(String content, File file){
 		try{
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 			bufferedWriter.write(content);
@@ -101,13 +86,19 @@ public class MyFileLib {
 		}
 	}
 	
-	/*
-	 * Method name		: WriteFile
-	 * Description		: write all Strings of an ArrayList<String> to the specified file (Overwrite)
-	 * Creator			: NhatMH
-	 * Last modified by	: -
+	public boolean checkEmptyFile(File file){
+		boolean isEmptyFlag = true;
+		long fileSize = file.length();
+		if(fileSize != 0){
+			isEmptyFlag = false;
+		}		
+		return isEmptyFlag;
+	}
+	
+	/* Purpose		: write all Strings of an ArrayList<String> to the specified file (Overwrite)
+	 * PIC			: NhatMH
 	 */
-	public void overwriteFile(ArrayList<String> strArr, File file){	
+	public void overwriteTextFile(ArrayList<String> strArr, File file){	
 		try{
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 			for(String str : strArr){
@@ -122,5 +113,50 @@ public class MyFileLib {
 		}
 	} 
 
+	/* Purpose		: Read Object from the specified file
+	 * PIC			: NhatMH
+	 */
+	public Object readObjectFromFile(File file){
+		Object obj = new Object();
+		
+		try{
+			ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+			obj = objectInputStream.readObject();
+			objectInputStream.close();
+		}catch(FileNotFoundException fnfe){
+			String logMessage = "Can't not find "+file.getAbsolutePath();
+			myLogger.printLog(logMessage, fnfe);
+		}catch(ClassNotFoundException cnfe){
+			String logMessage = "Can't not indentify the return Object from "+file.getAbsolutePath();
+			myLogger.printLog(logMessage, cnfe);
+		}
+		catch(IOException ioe){
+			String logMessage = "Can't not read "+file.getAbsolutePath();
+			myLogger.printLog(logMessage, ioe);
+		}
+		
+		return obj;
+	}
+	
+	/* Purpose		: write an Object to the specified file
+	 * PIC			: NhatMH
+	 */
+	public void writeObjectToFile(Object obj, File file){
+		try{
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+			objectOutputStream.writeObject(obj);
+			objectOutputStream.flush();
+			objectOutputStream.close();
+		}catch(FileNotFoundException fnfe){
+			String logMessage = "Can't not find "+file.getAbsolutePath();
+			myLogger.printLog(logMessage, fnfe);
+		}catch(IOException ioe){
+			String logMessage = "Can't not write "+file.getAbsolutePath();
+			myLogger.printLog(logMessage, ioe);
+		}
+	}
+	
+	
+	
 	private MyLogger myLogger = new MyLogger();
 }
