@@ -130,9 +130,8 @@ public class MainActivity extends Activity{
 		return true;
 	}
 	
-	/*
-	Purpose: Xoa 1 mon trong danh sach 
-	PIC: Huynh Van Lam
+	/* Purpose: Xoa 1 mon trong danh sach 
+	 * PIC: LamHV
 	 */
 	private void deleteDish(MenuItem item){
 //		int itemId = item.getItemId();
@@ -142,9 +141,8 @@ public class MainActivity extends Activity{
 		saveFile();		
 	}
 	
-	/*
-	Purpose: Sua 1 mon trong danh sach
-	PIC: Huynh Van Lam
+	/* Purpose: Sua 1 mon trong danh sach
+	 * PIC: LamHV
 	 */
 	private void editDish(Dialog d, int pos, String monEdit)
 	{
@@ -167,9 +165,8 @@ public class MainActivity extends Activity{
 		}
 	}
 	
-	/*
-	Purpose: Su kien khi click vao button them mon an - hien thi dialog them
-	PIC: Huynh Van Lam
+	/* Purpose: Su kien khi click vao button them mon an - hien thi dialog them
+	 * PIC: LamHV
 	 */
 	public void addDish(View view)
 	{
@@ -188,9 +185,8 @@ public class MainActivity extends Activity{
 		d.show();
 	}
 	
-	/*
-	Purpose: Them 1 mon an vao danh sach mon khi click vao nut them tren dialog
-	PIC: Huynh Van Lam
+	/* Purpose: Them 1 mon an vao danh sach mon khi click vao nut them tren dialog
+	 * PIC: Huynh Van Lam
 	 */
 	public void addDish(Dialog d){
 		final EditText et = (EditText) d.findViewById(R.id.editText);
