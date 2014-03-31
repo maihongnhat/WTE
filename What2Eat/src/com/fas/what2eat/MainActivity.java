@@ -67,38 +67,34 @@ public class MainActivity extends Activity{
 		lv.setAdapter(sa);
 		registerForContextMenu(lv);
 		
-		
 		// Edit 1 mon trong list = cach click len mon do
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				// TODO Auto-generated method stub
-				TextView clickedView = (TextView) arg1;
-//				Toast.makeText(MainActivity.this, "Item with id ["+arg3+"] - Position ["+arg2+"] -  ["+clickedView.getText()+"]", Toast.LENGTH_SHORT).show();
+
 				
-			    final Dialog de = new Dialog(arg0.getContext());
-				
-				de.setContentView(R.layout.dialog);
-				de.setTitle("Edit Dish");
-				de.setCancelable(true);
-				final EditText et = (EditText) de.findViewById(R.id.editText);
+			    final Dialog d = new Dialog(arg0.getContext());			    
+			    TextView clickedView = (TextView) arg1;		
+			    final String mon = clickedView.getText().toString();				
+				d.setContentView(R.layout.dialog);
+				d.setTitle("Edit Dish");
+				d.setCancelable(true);
 				final int pos = arg2; 
-				et.setText(clickedView.getText());
-				Button b = (Button) de.findViewById(R.id.btThem);
+				final EditText et = (EditText) d.findViewById(R.id.editText);
+				et.setText(mon);
+				Button b = (Button) d.findViewById(R.id.btThem);
 				b.setOnClickListener(new View.OnClickListener()
 					{
 
 						@Override
 						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							String mon = et.getText().toString();																				
-							MainActivity.this.dishList.set(pos, mon);
-							MainActivity.this.sa.notifyDataSetChanged();
-							de.dismiss();														
+							
+								String monEdit = et.getText().toString();
+								editDish(d,pos,monEdit);												
 						}							
 					});
-				de.show();
+				d.show();
 			}
 		});
 		
@@ -125,18 +121,35 @@ public class MainActivity extends Activity{
 	      menu.add(1, 1, 1, "Delete");
 	       
 	  }
-	
-	// Xoa mon 
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item)
 	{
+		deleteDish(item);
+		return true;
+	}
+	
+	/*
+	Purpose: Xoa 1 mon trong danh sach 
+	PIC: Huynh Van Lam
+	 */
+	private void deleteDish(MenuItem item){
 //		int itemId = item.getItemId();
 		AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) item.getMenuInfo();
 		dishList.remove(aInfo.position);
 		sa.notifyDataSetChanged();
-		saveFile();
-		return true;
-		
+		saveFile();		
+	}
+	
+	/*
+	Purpose: Sua 1 mon trong danh sach
+	PIC: Huynh Van Lam
+	 */
+	private void editDish(Dialog d, int pos, String monEdit)
+	{																			
+		MainActivity.this.dishList.set(pos, monEdit);
+		MainActivity.this.sa.notifyDataSetChanged();
+		d.dismiss();	
 	}
 		
 	//Doc danh sach mon tu file - Nhat
@@ -150,28 +163,38 @@ public class MainActivity extends Activity{
 		}
 	}
 	
-	// Them mon
+	/*
+	Purpose: Su kien khi click vao button them mon an - hien thi dialog them
+	PIC: Huynh Van Lam
+	 */
 	public void addDish(View view)
 	{
 		final Dialog d = new Dialog(this);
 		d.setContentView(R.layout.dialog);
 		d.setTitle("Add Dish");
 		d.setCancelable(true);
-		final EditText et = (EditText) d.findViewById(R.id.editText);
 		Button b = (Button) d.findViewById(R.id.btThem);
 		b.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					String mon = et.getText().toString();
-					MainActivity.this.dishList.add(mon);
-					MainActivity.this.sa.notifyDataSetChanged();
-					saveFile();
-					d.dismiss();										
-				}					
+					addDish(d);
+				}
 			});
 		d.show();
+	}
+	
+	/*
+	Purpose: Them 1 mon an vao danh sach mon khi click vao nut them tren dialog
+	PIC: Huynh Van Lam
+	 */
+	public void addDish(Dialog d){
+		final EditText et = (EditText) d.findViewById(R.id.editText);
+		String mon = et.getText().toString();
+		MainActivity.this.dishList.add(mon);
+		MainActivity.this.sa.notifyDataSetChanged();
+		saveFile();
+		d.dismiss();													
 	}
 
 
