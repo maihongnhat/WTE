@@ -9,6 +9,7 @@ import com.fas.lib.MyFileLib;
 import com.fas.lib.MyLogger;
 
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.Dialog;
@@ -82,7 +83,7 @@ public class MainActivity extends Activity{
 				d.setCancelable(true);
 				final int pos = arg2; 
 				final EditText et = (EditText) d.findViewById(R.id.editText);
-				et.setText(mon);
+				et.append(mon);
 				Button b = (Button) d.findViewById(R.id.btThem);
 				b.setOnClickListener(new View.OnClickListener()
 					{
@@ -146,10 +147,13 @@ public class MainActivity extends Activity{
 	PIC: Huynh Van Lam
 	 */
 	private void editDish(Dialog d, int pos, String monEdit)
-	{																			
-		MainActivity.this.dishList.set(pos, monEdit);
-		MainActivity.this.sa.notifyDataSetChanged();
-		d.dismiss();	
+	{
+		if(!checkEmptyString(monEdit, "Empty String"))
+		{
+			MainActivity.this.dishList.set(pos, monEdit);
+			MainActivity.this.sa.notifyDataSetChanged();
+			d.dismiss();
+		}			
 	}
 		
 	//Doc danh sach mon tu file - Nhat
@@ -191,10 +195,14 @@ public class MainActivity extends Activity{
 	public void addDish(Dialog d){
 		final EditText et = (EditText) d.findViewById(R.id.editText);
 		String mon = et.getText().toString();
-		MainActivity.this.dishList.add(mon);
-		MainActivity.this.sa.notifyDataSetChanged();
-		saveFile();
-		d.dismiss();													
+		if(!checkEmptyString(mon, "Please don't enter empty value"))
+		{
+			MainActivity.this.dishList.add(mon);
+			MainActivity.this.sa.notifyDataSetChanged();
+			saveFile();
+			d.dismiss();
+		}
+															
 	}
 
 
@@ -232,5 +240,15 @@ public class MainActivity extends Activity{
     
     public void randomDish(View v){
 		showPopup();
+    }
+    
+    @SuppressLint("NewApi")
+	private Boolean checkEmptyString(String s, String alert){
+    	if(s.isEmpty())
+    	{
+    		Toast.makeText(this, alert, Toast.LENGTH_SHORT).show();
+    		return true;
+    	}
+    	return false;
     }
 }
