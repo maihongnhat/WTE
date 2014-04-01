@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">What2Eat</string>
-    <string name="action_settings">Settings</string>
-    <string name="button_Random">Random</string>
-
+    <string name="app_name">Món gì hôm nay?</string>
+    <string name="action_settings">Cài đặt</string>
+    <string name="button_Random">Chọn ngẫu nhiên</string>
+    <string name="button_Add">Thêm món</string>
+    <string name="SS_bottom">FAS</string>
+    <string name="desc">imgLogo</string>
+    <string name="button_Save">Lưu món</string>
+	<string name="button_RandomAgain">Chọn lại</string>
 </resources>

@@ -34,6 +34,6 @@
         android:layout_alignBottom="@+id/buttonRandom"
         android:layout_alignLeft="@+id/listview"
         android:onClick="addDish"
-        android:text="Add" />
+        android:text="@string/button_Add" />
 
 </RelativeLayout>
