@@ -226,10 +226,15 @@ public class MainActivity extends Activity{
 	 * 	Purpose	: Pick one dish randomly and show it on the dialog
 	 */
     public void showPopup() {
-    	EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
-    	int randomDishId = r.nextInt(dishList.size());
-		et.setText(dishList.get(randomDishId));
-    	randomDialog.show();
+    	int size = dishList.size();
+    	if(size >0)
+    	{
+    		EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
+        	int randomDishId = r.nextInt(size);
+    		et.setText(dishList.get(randomDishId));
+        	randomDialog.show();
+    	}
+    	
     }
     
     /* RANDOM DISH
