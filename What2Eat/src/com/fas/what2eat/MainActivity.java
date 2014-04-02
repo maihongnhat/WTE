@@ -76,8 +76,7 @@ public class MainActivity extends Activity{
 			    TextView clickedView = (TextView) arg1;		
 			    final String mon = clickedView.getText().toString();				
 				d.setContentView(R.layout.dialog);
-				String edit_title = "Sửa đổi thông tin món ";
-				d.setTitle(edit_title);
+				d.setTitle(R.string.dialog_edit_title);
 				d.setCancelable(true);
 				final int pos = arg2; 
 				final EditText et = (EditText) d.findViewById(R.id.editText);
