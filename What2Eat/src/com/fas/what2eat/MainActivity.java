@@ -38,6 +38,7 @@ public class MainActivity extends Activity{
 	Random r = new Random();
     Dialog randomDialog;
 	
+    
     public static final String ALL_DISHES_FILENAME = "AllDishes.txt";
 	public File ALL_DISHES_FILE;
 	public MyFileLib myIO;
@@ -65,10 +66,10 @@ public class MainActivity extends Activity{
 			lv.setAdapter(sa);
 			registerForContextMenu(lv);
 		
-		/* EDIT FUNCTION
-		 * 		Purpose	: to rename the pre-assigned dish
-		 * 		Usage	: tap on edit button		 
-		 */
+	/* EDIT FUNCTION
+	 * 		Purpose	: to rename the pre-assigned dish
+	 * 		Usage	: tap on edit button		 
+	 */
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -76,7 +77,7 @@ public class MainActivity extends Activity{
 			    TextView clickedView = (TextView) arg1;		
 			    final String mon = clickedView.getText().toString();				
 				d.setContentView(R.layout.dialog);
-				d.setTitle(R.string.dialog_edit_title);
+				d.setTitle(getResources().getString(R.string.dialog_edit_title));
 				d.setCancelable(true);
 				final int pos = arg2; 
 				final EditText et = (EditText) d.findViewById(R.id.editText);
@@ -113,11 +114,8 @@ public class MainActivity extends Activity{
 	      AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) menuInfo;
 	       
 	      String s = dishList.get(aInfo.position);
-	      String menu_HeaderTitle = "Tùy chọn của ";
-	      String menu_xoa = "Xóa";
-	      menu.setHeaderTitle(menu_HeaderTitle + s);
-	      menu.add(1, 1, 1, menu_xoa);
-	       
+	      menu.setHeaderTitle(getResources().getString(R.string.menu_header_title) + " " + s);
+	      menu.add(1, 1, 1, getResources().getString(R.string.menu_delete_title));	       
 	}
 
 	@Override
@@ -141,7 +139,7 @@ public class MainActivity extends Activity{
 	 */
 	private void editDish(Dialog d, int pos, String monEdit)
 	{
-		if(!checkEmptyString(monEdit, "Empty String"))
+		if(!checkEmptyString(monEdit, getResources().getString(R.string.EmptyString)))
 		{
 			MainActivity.this.dishList.set(pos, monEdit);
 			MainActivity.this.sa.notifyDataSetChanged();
@@ -163,16 +161,13 @@ public class MainActivity extends Activity{
 	/* Purpose: Su kien khi click vao button them mon an - hien thi dialog them
 	 * PIC: LamHV
 	 */
-	public void addDish(View view)
-	{
+	public void addDish(View view) {
 		final Dialog d = new Dialog(this);
 		d.setContentView(R.layout.dialog);
-		String Add_title = "Bổ sung món ăn";
-		d.setTitle(Add_title);
+		d.setTitle(getResources().getString(R.string.dialog_add_title));
 		d.setCancelable(true);
 		Button b = (Button) d.findViewById(R.id.btThem);
-		b.setOnClickListener(new View.OnClickListener()
-			{
+		b.setOnClickListener(new View.OnClickListener()	{
 				@Override
 				public void onClick(View v) {
 					addDish(d);
@@ -187,8 +182,7 @@ public class MainActivity extends Activity{
 	public void addDish(Dialog d){
 		final EditText et = (EditText) d.findViewById(R.id.editText);
 		String mon = et.getText().toString();
-		String checkEmptyNoti = "Bạn không nên nhập rỗng.";
-		if(!checkEmptyString(mon, checkEmptyNoti))
+		if(!checkEmptyString(mon, getResources().getString(R.string.checkEmptyNoti)))
 		{
 			MainActivity.this.dishList.add(mon);
 			MainActivity.this.sa.notifyDataSetChanged();
@@ -205,8 +199,7 @@ public class MainActivity extends Activity{
 	public void init() {
 		this.randomDialog = new Dialog(this);		
 		randomDialog.setContentView(R.layout.randomdialog);
-		String randomDialog_title = "Hãy cùng thưởng thức";
-		randomDialog.setTitle(randomDialog_title);
+		randomDialog.setTitle(getResources().getString(R.string.dialog_random_title));
 		randomDialog.setCancelable(true);
 		final EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
 		et.setEnabled(false);
@@ -226,8 +219,7 @@ public class MainActivity extends Activity{
 	 */
     public void showPopup() {
     	int size = dishList.size();
-    	if(size >0)
-    	{
+    	if(size >0)	{
     		EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
         	int randomDishId = r.nextInt(size);
     		et.setText(dishList.get(randomDishId));

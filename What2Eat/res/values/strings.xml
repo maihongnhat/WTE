@@ -10,4 +10,12 @@
     <string name="button_Save">Lưu món</string>
 	<string name="button_RandomAgain">Chọn lại</string>
 	<string name="dialog_edit_title">Sửa đổi thông tin món</string>
+	<string name="FileName">AllDishes.txt</string>
+	
+<string name="menu_header_title">Tùy chọn của món</string>
+<string name="menu_delete_title">Xóa</string>
+<string name="EmptyString">Empty String</string>
+<string name="dialog_add_title">Bổ sung món ăn</string>
+<string name="checkEmptyNoti">Bạn không nên nhập rỗng.</string>
+<string name="dialog_random_title">Hãy cùng thưởng thức!</string>
 </resources>
