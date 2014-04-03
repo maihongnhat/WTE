@@ -18,4 +18,79 @@
 <string name="dialog_add_title">Bổ sung món ăn</string>
 <string name="checkEmptyNoti">Bạn không nên nhập rỗng.</string>
 <string name="dialog_random_title">Hãy cùng thưởng thức!</string>
+
+  <string-array name="list_dish_auto">
+      <item >Bánh canh</item>
+      <item >Bánh đa cua</item>
+      <item >Bún bò Huế</item>
+      <item >Bún bung</item>
+      <item >Bún cá</item>
+      <item >Bún chả</item>
+      <item >Bún chả cả</item>
+      <item >Bún chạo tôm</item>
+      <item >Bún đậu mắm tôm</item>
+      <item >Bún mắm</item>
+      <item >Bún mọc</item>
+      <item >Bún ốc</item>
+      <item >Bún riêu cua</item>
+      <item >Bún thịt nướng</item>
+      <item >Bún thang</item>
+      <item >Cao lầu</item>
+      <item >Hủ tiếu</item>
+      <item >Mì Quảng</item>
+      <item >Mì xào</item>
+      <item >Miến lươn</item>
+      <item >Miến trộn</item>
+      <item >Phở</item>
+      <item >Cơm bụi</item>
+      <item >Cơm cháy</item>
+      <item >Cơm hến</item>
+      <item >Cơm gà</item>
+      <item >Cơm lam</item>
+      <item >Cơm nắm</item>
+      <item >Cơm nếp</item>
+      <item >Cơm rang</item>
+      <item >Cơm tấm</item>
+      <item >Cơm trắng</item>
+      <item >Xôi đậu đen</item>
+      <item >Xôi gà</item>
+      <item >Xôi gấc</item>
+      <item >Xôi lá cẩm</item>
+      <item >Xôi đậu phộng</item>
+      <item >Xôi ngũ sắu</item>
+      <item >Xôi vò</item>
+      <item >Xôi xéo</item>
+      <item >Cháo lòng</item>
+      <item >Cháo trắng</item>
+      <item >Lẩu</item>
+      <item >Súp cua</item>
+      <item >Súp yến</item>
+      <item >Bánh cuốn</item>
+      <item >Bò bía</item>
+      <item >Chả nem</item>
+      <item >Gỏi cá</item>
+      <item >Nem cuốn</item>
+      <item >Nem chua</item>
+      <item >Bánh bao</item>
+      <item >Bánh bột lọc</item>
+      <item >Bánh căn</item>
+      <item >Bánh chưng</item>
+      <item >Bánh bèo</item>
+      <item >Bánh dày</item>
+      <item >Bánh đúc</item>
+      <item >Bánh giò</item>
+      <item >Bánh gối</item>
+      <item >Bánh hỏi</item>
+      <item >Bánh ít</item>
+      <item >Bánh khọt</item>
+      <item >Bánh khúc</item>
+      <item >Bánh mì</item>
+      <item >Bánh nậm</item>
+      <item >Bánh tai</item>
+      <item >Bánh tẻ</item>
+      <item >Bánh tét</item>
+      <item >Bánh tôm Hồ Tây</item>
+      <item >Bánh xèo</item>
+      
+      </string-array>
 </resources>
