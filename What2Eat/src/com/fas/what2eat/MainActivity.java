@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -38,7 +38,7 @@ public class MainActivity extends Activity{
 	ArrayAdapter<String> sa;
 	Random r = new Random();
     Dialog randomDialog;
-    public MultiAutoCompleteTextView actv;
+    public AutoCompleteTextView actv;
     
     public static final String ALL_DISHES_FILENAME = "AllDishes.txt";
 	public File ALL_DISHES_FILE;
@@ -84,11 +84,11 @@ public class MainActivity extends Activity{
 				
 				//autoComplete function for EDIT
 				String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
-				final MultiAutoCompleteTextView et = (MultiAutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
+				final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
 				@SuppressWarnings({ "rawtypes", "unchecked" })
 				ArrayAdapter adapter_auto = new ArrayAdapter(arg0.getContext(), android.R.layout.simple_list_item_1, listDishAuto);
 				et.setAdapter(adapter_auto);
-				et.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+				//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
 								
 				final int pos = arg2; 
 				//final EditText et = (EditText) d.findViewById(R.id.editText);
@@ -180,11 +180,11 @@ public class MainActivity extends Activity{
 		
 		//initialize and implement the auto Complete function
 		String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
-		final MultiAutoCompleteTextView et = (MultiAutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
+		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ArrayAdapter adapter_auto = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listDishAuto);
 		et.setAdapter(adapter_auto);
-		et.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+		//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
 				
 		Button b = (Button) d.findViewById(R.id.btThem);
 		b.setOnClickListener(new View.OnClickListener()	{
@@ -202,7 +202,7 @@ public class MainActivity extends Activity{
 	 */
 
 	public void addDish(Dialog d){
-		final MultiAutoCompleteTextView et = (MultiAutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
+		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
 
 		String mon = et.getText().toString();
 		if(!checkEmptyString(mon, getResources().getString(R.string.checkEmptyNoti)))

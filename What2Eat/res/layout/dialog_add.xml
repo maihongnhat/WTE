@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <MultiAutoCompleteTextView
+    <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="center_horizontal" >
-        </MultiAutoCompleteTextView>
+        </AutoCompleteTextView>
 
     <Button
         android:id="@+id/btThem"
