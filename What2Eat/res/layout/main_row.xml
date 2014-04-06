@@ -6,7 +6,7 @@
     
     <CheckBox 
         android:id="@+id/chk"	
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,8 @@
         android:layout_alignBaseline="@+id/chk"
         android:layout_alignBottom="@+id/chk"
         android:layout_margin="1dp"
-        android:layout_toLeftOf="@+id/chk"
-        android:focusable="false"/>
+        android:layout_toRightOf="@+id/chk"
+        android:focusable="false"
+        android:textSize="17dp"/>
     
 </RelativeLayout>
