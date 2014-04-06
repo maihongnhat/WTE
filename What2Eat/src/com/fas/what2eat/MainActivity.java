@@ -1,9 +1,14 @@
 package com.fas.what2eat;
 
+
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.fas.lib.Dish;
+import com.fas.lib.DishAdapter;
 import com.fas.lib.MyFileLib;
 import com.fas.lib.MyLogger;
 
@@ -11,6 +16,7 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +24,8 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AbsListView.MultiChoiceModeListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
+@SuppressLint("NewApi")
 public class MainActivity extends Activity{
 
 	/* Initializing variables:
@@ -34,8 +43,8 @@ public class MainActivity extends Activity{
 	 * r			: Random variable used for picking up a dish in the list
 	 * randomDialog : Dialog which is shown when user taps on the Random button
 	 * */	 
-	List<String> dishList = new ArrayList<String>();
-	ArrayAdapter<String> sa;
+	ArrayList<Dish> dishList = new ArrayList<Dish>();
+	DishAdapter dap;
 	Random r = new Random();
     Dialog randomDialog;
     public AutoCompleteTextView actv;
@@ -64,10 +73,49 @@ public class MainActivity extends Activity{
 		initDishes();
 		
 		ListView lv = (ListView) findViewById(R.id.listview);
-			sa = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dishList);
-			lv.setAdapter(sa);
-			registerForContextMenu(lv);
+			
+		dap = new DishAdapter(dishList, this);
+			
+		lv.setAdapter(dap);
 		
+		/** For contextual action mode, the choice mode should be CHOICE_MODE_MULTIPLE_MODAL */
+		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+		
+		/** Setting multichoicemode listener for the listview */
+        lv.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+			
+        	private int nr = 0;
+        	
+        	@Override
+			public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+				return false;
+			}
+			
+			@Override
+			public void onDestroyActionMode(ActionMode mode) {
+				
+			}
+			
+			/** This will be invoked when action mode is created. In our case , it is on long clicking a menu item */
+			@Override
+			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+				nr=0;
+				getMenuInflater().inflate(R.menu.context_menu, menu);
+				return true;
+			}
+			
+			/** Invoked when an action in the action mode is clicked */
+			@Override
+			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {				
+				Toast.makeText(getBaseContext(), "Test", Toast.LENGTH_LONG).show();								
+				return false;
+			}
+			
+			@Override
+			public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+			}
+		});
+			
 	/* EDIT FUNCTION
 	 * 		Purpose	: to rename the pre-assigned dish
 	 * 		Usage	: tap on edit button		 
@@ -76,22 +124,22 @@ public class MainActivity extends Activity{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			    final Dialog d = new Dialog(arg0.getContext());			    
-			    TextView clickedView = (TextView) arg1;		
-			    final String mon = clickedView.getText().toString();				
+			    TextView nameView = (TextView) arg1.findViewById(R.id.name);	
+			    final String mon = nameView.getText().toString();				
 				d.setContentView(R.layout.dialog_add);
 				d.setTitle(getResources().getString(R.string.dialog_edit_title));
 				d.setCancelable(true);
 				
-				//autoComplete function for EDIT
-				String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
+//				//autoComplete function for EDIT
+//				String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
 				final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
-				@SuppressWarnings({ "rawtypes", "unchecked" })
-				ArrayAdapter adapter_auto = new ArrayAdapter(arg0.getContext(), android.R.layout.simple_list_item_1, listDishAuto);
-				et.setAdapter(adapter_auto);
-				//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
+//				@SuppressWarnings({ "rawtypes", "unchecked" })
+//				ArrayAdapter adapter_auto = new ArrayAdapter(arg0.getContext(), android.R.layout.simple_list_item_1, listDishAuto);
+//				et.setAdapter(adapter_auto);
+//				//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
 								
 				final int pos = arg2; 
-				//final EditText et = (EditText) d.findViewById(R.id.editText);
+//				final EditText et = (EditText) d.findViewById(R.id.etEdit);
 				et.append(mon);
 				Button b = (Button) d.findViewById(R.id.btThem);
 				b.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +151,9 @@ public class MainActivity extends Activity{
 					});
 				d.show();
 			}
-		});		
+		});	
+		
+		registerForContextMenu(lv);
 		init();
 	}
 	
@@ -113,9 +163,11 @@ public class MainActivity extends Activity{
 	private void editDish(Dialog d, int pos, String monEdit) {
 		if(!checkEmptyString(monEdit, getResources().getString(R.string.EmptyString)))
 		{
-			MainActivity.this.dishList.set(pos, monEdit);
-			MainActivity.this.sa.notifyDataSetChanged();
+			Dish dis = new Dish(monEdit);
+			dishList.set(pos, dis);
+			dap.notifyDataSetChanged();
 			d.dismiss();
+			saveFile();
 		}			
 	}
 	
@@ -130,70 +182,82 @@ public class MainActivity extends Activity{
 		return true;
 	}
 	
-	// Hien thi menu Delete khi press and hold tren 1 item
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	       
-	      super.onCreateContextMenu(menu, v, menuInfo);
-	      AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) menuInfo;
-	       
-	      String s = dishList.get(aInfo.position);
-	      menu.setHeaderTitle(getResources().getString(R.string.menu_header_title) + " " + s);
-	      menu.add(1, 1, 1, getResources().getString(R.string.menu_delete_title));	       
-	}
+//	// Hien thi menu Delete khi press and hold tren 1 item
+//	@Override
+//	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+//	       
+//	      super.onCreateContextMenu(menu, v, menuInfo);
+//	      AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) menuInfo;
+//	       
+//	      String s = dishList.get(aInfo.position);
+//	      menu.setHeaderTitle(getResources().getString(R.string.menu_header_title) + " " + s);
+//	      menu.add(1, 1, 1, getResources().getString(R.string.menu_delete_title));	       
+//	}
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		deleteDish(item);
-		return true;
-	}
+//	@Override
+//	public boolean onContextItemSelected(MenuItem item) {
+//		deleteDish(item);
+//		return true;
+//	}
 	
-	/* Purpose: Xoa 1 mon trong danh sach 
-	 * PIC: LamHV
-	 */
-	private void deleteDish(MenuItem item){
-		AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) item.getMenuInfo();
-		dishList.remove(aInfo.position);
-		sa.notifyDataSetChanged();
-		saveFile();		
-	}	
+//	/* Purpose: Xoa 1 mon trong danh sach 
+//	 * PIC: LamHV
+//	 */
+//	private void deleteDish(MenuItem item){
+//		AdapterContextMenuInfo aInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+//		dishList.remove(aInfo.position);
+//		dap.notifyDataSetChanged();
+//		saveFile();		
+//	}	
 		
 	//Doc danh sach mon tu file - Nhat
 	@SuppressWarnings("unchecked")
 	private void initDishes()
 	{
 		if(!myIO.checkEmptyFile(ALL_DISHES_FILE)){
-			dishList = (ArrayList<String>) myIO.readObjectFromFile(ALL_DISHES_FILE);
+			
+			dishList = (ArrayList<Dish>) myIO.readObjectFromFile(ALL_DISHES_FILE);
 		}else{
-			dishList = new ArrayList<String>();
+			dishList = new ArrayList<Dish>();
 		}
 	}
 	
 	/* Purpose: Su kien khi click vao button them mon an - hien thi dialog them
 	 * PIC: LamHV
 	 */
-	public void addDish(View view) {
-		final Dialog d = new Dialog(this);
-		d.setContentView(R.layout.dialog_add);
-		d.setTitle(getResources().getString(R.string.dialog_add_title));
-		d.setCancelable(true);
-		
-		//initialize and implement the auto Complete function
-		String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
-		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
-		@SuppressWarnings({ "rawtypes", "unchecked" })
-		ArrayAdapter adapter_auto = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listDishAuto);
-		et.setAdapter(adapter_auto);
-		//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
-				
-		Button b = (Button) d.findViewById(R.id.btThem);
-		b.setOnClickListener(new View.OnClickListener()	{
-				@Override
-				public void onClick(View v) {
-					addDish(d);
-				}
-			});
-		d.show();
+//	public void addDish(View view) {
+//		final Dialog d = new Dialog(this);
+//		d.setContentView(R.layout.dialog_add);
+//		d.setTitle(getResources().getString(R.string.dialog_add_title));
+//		d.setCancelable(true);
+//		
+//		//initialize and implement the auto Complete function
+//		String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
+//		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
+//		@SuppressWarnings({ "rawtypes", "unchecked" })
+//		ArrayAdapter adapter_auto = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listDishAuto);
+//		et.setAdapter(adapter_auto);
+//		//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
+//				
+//		Button b = (Button) d.findViewById(R.id.btThem);
+//		b.setOnClickListener(new View.OnClickListener()	{
+//				@Override
+//				public void onClick(View v) {
+//					addDish(d);
+//				}
+//			});
+//		d.show();
+//	}
+	public void addDish(View view){
+		EditText et = (EditText) findViewById(R.id.etDish);
+		String dish = et.getText().toString();
+		if(!checkEmptyString(dish, getResources().getString(R.string.checkEmptyNoti)))
+		{
+			Dish di = new Dish(dish);
+			dishList.add(di);
+			MainActivity.this.dap.notifyDataSetChanged();
+			saveFile();
+		}
 	}
 	
 	
@@ -201,19 +265,19 @@ public class MainActivity extends Activity{
 	 * PIC: Huynh Van Lam
 	 */
 
-	public void addDish(Dialog d){
-		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
-
-		String mon = et.getText().toString();
-		if(!checkEmptyString(mon, getResources().getString(R.string.checkEmptyNoti)))
-		{
-			MainActivity.this.dishList.add(mon);
-			MainActivity.this.sa.notifyDataSetChanged();
-			saveFile();
-			d.dismiss();
-		}
-															
-	}
+//	public void addDish(Dialog d){
+//		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
+//
+//		String mon = et.getText().toString();
+//		if(!checkEmptyString(mon, getResources().getString(R.string.checkEmptyNoti)))
+//		{
+//			MainActivity.this.dishList.add(mon);
+//			MainActivity.this.dap.notifyDataSetChanged();
+//			saveFile();
+//			d.dismiss();
+//		}
+//															
+//	}
 
 	
 	/* INITIALIZING THE RANDOM DIALOG
@@ -233,7 +297,7 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				int randomDishId = r.nextInt(dishList.size());
-				et.setText(dishList.get(randomDishId));
+				et.setText(dishList.get(randomDishId).getName());
 			}							
 			});
 	}
@@ -247,7 +311,7 @@ public class MainActivity extends Activity{
     	if(size >0)	{
     		EditText et = (EditText) randomDialog.findViewById(R.id.chosenDish);
         	int randomDishId = r.nextInt(size);
-    		et.setText(dishList.get(randomDishId));
+    		et.setText(dishList.get(randomDishId).getName());
         	randomDialog.show();
     	}
     	
@@ -263,8 +327,7 @@ public class MainActivity extends Activity{
     }
 	
     public void saveFile(){
-		ArrayList<String> arrayList = new ArrayList<String>(dishList); 
-		myIO.writeObjectToFile(arrayList, ALL_DISHES_FILE);
+		myIO.writeObjectToFile(dishList, ALL_DISHES_FILE);
     }    
     
     @SuppressLint("NewApi")

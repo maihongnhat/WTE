@@ -11,29 +11,44 @@
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
-    </ListView>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonRandom"
+        android:layout_below="@+id/buttonAdd"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="0dp"
+        android:divider="@null" >
 
-    <Button
-        android:id="@+id/buttonRandom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/listview"
-        android:layout_below="@+id/listview"
-        android:layout_marginTop="33dp"
-        android:text="@string/button_Random"
-        android:onClick="randomDish" />
+    </ListView>
 
     <Button
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonRandom"
-        android:layout_alignBottom="@+id/buttonRandom"
-        android:layout_alignLeft="@+id/listview"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/listview"
         android:onClick="addDish"
-        android:text="@string/button_Add" />
+        android:text="@string/button_Add"
+        android:focusable="false" />
+
+    <EditText
+        android:id="@+id/etDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonAdd"
+        android:layout_alignBottom="@+id/buttonAdd"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/buttonAdd"
+        android:ems="10" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/buttonRandom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="randomDish"
+        android:text="@string/button_Random" />
 
 </RelativeLayout>
