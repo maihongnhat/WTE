@@ -32,7 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
  
-@SuppressLint("NewApi")
+@SuppressLint("NewApi")  
 public class MainActivity extends Activity{
 
 	/* Initializing variables:
