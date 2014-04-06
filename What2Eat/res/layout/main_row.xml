@@ -25,6 +25,7 @@
         android:layout_margin="1dp"
         android:layout_toLeftOf="@+id/chk"
         android:focusable="false"
-        android:textSize="17dp"/>
+        android:textSize="17dp"
+        android:singleLine="true"/>
     
 </RelativeLayout>
