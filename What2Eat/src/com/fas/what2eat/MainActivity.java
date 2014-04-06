@@ -1,7 +1,5 @@
 package com.fas.what2eat;
 
-
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +45,7 @@ public class MainActivity extends Activity{
 	DishAdapter dap;
 	Random r = new Random();
     Dialog randomDialog;
-    public AutoCompleteTextView actv;
+    
     
     public static final String ALL_DISHES_FILENAME = "AllDishes.txt";
 	public File ALL_DISHES_FILE;
@@ -126,20 +124,12 @@ public class MainActivity extends Activity{
 			    final Dialog d = new Dialog(arg0.getContext());			    
 			    TextView nameView = (TextView) arg1.findViewById(R.id.name);	
 			    final String mon = nameView.getText().toString();				
-				d.setContentView(R.layout.dialog_add);
+				d.setContentView(R.layout.dialog);
 				d.setTitle(getResources().getString(R.string.dialog_edit_title));
 				d.setCancelable(true);
-				
-//				//autoComplete function for EDIT
-//				String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
-				final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
-//				@SuppressWarnings({ "rawtypes", "unchecked" })
-//				ArrayAdapter adapter_auto = new ArrayAdapter(arg0.getContext(), android.R.layout.simple_list_item_1, listDishAuto);
-//				et.setAdapter(adapter_auto);
-//				//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
-								
+												
 				final int pos = arg2; 
-//				final EditText et = (EditText) d.findViewById(R.id.etEdit);
+				final EditText et = (EditText) d.findViewById(R.id.editText);
 				et.append(mon);
 				Button b = (Button) d.findViewById(R.id.btThem);
 				b.setOnClickListener(new View.OnClickListener() {
@@ -225,29 +215,6 @@ public class MainActivity extends Activity{
 	/* Purpose: Su kien khi click vao button them mon an - hien thi dialog them
 	 * PIC: LamHV
 	 */
-//	public void addDish(View view) {
-//		final Dialog d = new Dialog(this);
-//		d.setContentView(R.layout.dialog_add);
-//		d.setTitle(getResources().getString(R.string.dialog_add_title));
-//		d.setCancelable(true);
-//		
-//		//initialize and implement the auto Complete function
-//		String[] listDishAuto = getResources().getStringArray(R.array.list_dish_auto);
-//		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
-//		@SuppressWarnings({ "rawtypes", "unchecked" })
-//		ArrayAdapter adapter_auto = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listDishAuto);
-//		et.setAdapter(adapter_auto);
-//		//et.setTokenizer(new AutoCompleteTextView.CommaTokenizer());
-//				
-//		Button b = (Button) d.findViewById(R.id.btThem);
-//		b.setOnClickListener(new View.OnClickListener()	{
-//				@Override
-//				public void onClick(View v) {
-//					addDish(d);
-//				}
-//			});
-//		d.show();
-//	}
 	public void addDish(View view){
 		EditText et = (EditText) findViewById(R.id.etDish);
 		String dish = et.getText().toString();
@@ -255,31 +222,12 @@ public class MainActivity extends Activity{
 		{
 			Dish di = new Dish(dish);
 			dishList.add(di);
+			et.setText(null);
 			MainActivity.this.dap.notifyDataSetChanged();
 			saveFile();
 		}
 	}
-	
-	
-	/* Purpose: Them 1 mon an vao danh sach mon khi click vao nut them tren dialog
-	 * PIC: Huynh Van Lam
-	 */
-
-//	public void addDish(Dialog d){
-//		final AutoCompleteTextView et = (AutoCompleteTextView) d.findViewById(R.id.autoCompleteTextView1);
-//
-//		String mon = et.getText().toString();
-//		if(!checkEmptyString(mon, getResources().getString(R.string.checkEmptyNoti)))
-//		{
-//			MainActivity.this.dishList.add(mon);
-//			MainActivity.this.dap.notifyDataSetChanged();
-//			saveFile();
-//			d.dismiss();
-//		}
-//															
-//	}
-
-	
+		
 	/* INITIALIZING THE RANDOM DIALOG
 	 * 	Purpose	: To prepare for the random dialog before user tapping on the random button
 	 * 
