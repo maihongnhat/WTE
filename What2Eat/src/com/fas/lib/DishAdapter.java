@@ -10,12 +10,15 @@ import com.fas.what2eat.*;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
@@ -33,7 +36,7 @@ public class DishAdapter extends ArrayAdapter<Dish> {
 	}
 	
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		
 	    // First let's verify the convertView is not null
 	    if (convertView == null) {
@@ -46,7 +49,21 @@ public class DishAdapter extends ArrayAdapter<Dish> {
 	        Dish d = dishList.get(position);
 	        tv.setText(d.getName());
 	        
+	        
 	    CheckBox chb = (CheckBox) convertView.findViewById(R.id.chk);
+	    final View v = convertView;
+	    chb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				ListView lv = (ListView) parent;
+				if(isChecked)
+				{
+					
+				}
+				lv.setItemChecked(position, isChecked);	
+			}
+		});
 	    
 	    
 	    
@@ -54,6 +71,7 @@ public class DishAdapter extends ArrayAdapter<Dish> {
             
             chb.setChecked(true);
             removeList.add(dishList.get(position));
+//            	convertView.setBackgroundColor(Color.BLUE);// this is a selected position so make it red
         }else
         {
         	chb.setChecked(false);
