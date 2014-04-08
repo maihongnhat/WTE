@@ -51,16 +51,11 @@ public class DishAdapter extends ArrayAdapter<Dish> {
 	        
 	        
 	    CheckBox chb = (CheckBox) convertView.findViewById(R.id.chk);
-	    final View v = convertView;
 	    chb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				ListView lv = (ListView) parent;
-				if(isChecked)
-				{
-					
-				}
 				lv.setItemChecked(position, isChecked);	
 			}
 		});
@@ -100,6 +95,10 @@ public class DishAdapter extends ArrayAdapter<Dish> {
         return mSelection.keySet();
     }
 
+    public int getSelectedCount()
+    {
+    	return mSelection.size();
+    }
 
     public void removeSelection(int position) {
         mSelection.remove(position);

@@ -79,7 +79,6 @@ public class MainActivity extends Activity{
 		/** Setting multichoicemode listener for the listview */
         lv.setMultiChoiceModeListener(new MultiChoiceModeListener() {
 			
-        	private int nr = 0;
             
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -96,8 +95,6 @@ public class MainActivity extends Activity{
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 // TODO Auto-generated method stub
-                 
-                nr = 0;
                 MenuInflater inflater = getMenuInflater();
                 inflater.inflate(R.menu.context_menu, menu);
                 return true;
@@ -110,7 +107,6 @@ public class MainActivity extends Activity{
                  
                     case R.id.delete:
                     	dap.removeSelectedDishes();
-                        nr = 0;
                         dap.clearSelection();
                         mode.finish();
                         
@@ -121,15 +117,14 @@ public class MainActivity extends Activity{
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position,
                     long id, boolean checked) {
+            	System.out.println("test");
                 // TODO Auto-generated method stub
                  if (checked) {
-                        nr++;
                         dap.setNewSelection(position, checked);                   
                     } else {
-                        nr--;
                         dap.removeSelection(position);                
                     }
-                    mode.setTitle(nr + " selected");
+                    mode.setTitle(dap.getSelectedCount() + " selected");
                  
             }
 		});
