@@ -59,7 +59,7 @@ public class MyFileLib {
 			myLogger.printLog(logMessage, fnfe);
 		}
 		catch(IOException ioe){
-			String logMessage = "Can't not initialize Reader for "+file.getAbsolutePath();
+			String logMessage = "Can't not read "+file.getAbsolutePath();
 			myLogger.printLog(logMessage, ioe);
 		}
 		finally{

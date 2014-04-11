@@ -29,30 +29,31 @@ public final class R {
         public static final int starbucks_coffee=0x7f020002;
     }
     public static final class id {
-        public static final int action1=0x7f09000c;
-        public static final int action2=0x7f09000d;
-        public static final int action3=0x7f09000e;
         public static final int action_settings=0x7f09000f;
-        public static final int autoCompleteTextView1=0x7f090007;
-        public static final int btThem=0x7f090006;
-        public static final int buttonAdd=0x7f090002;
-        public static final int buttonRandom=0x7f090001;
-        public static final int buttonRandomAgain=0x7f09000b;
-        public static final int chk=0x7f090008;
-        public static final int chosenDish=0x7f09000a;
-        public static final int editText=0x7f090005;
-        public static final int etDish=0x7f090003;
-        public static final int imgLogo=0x7f090004;
-        public static final int listview=0x7f090000;
-        public static final int name=0x7f090009;
+        public static final int autoCompleteTextView1=0x7f090002;
+        public static final int btAdd=0x7f090003;
+        public static final int buttonAdd=0x7f09000a;
+        public static final int buttonEdit=0x7f090005;
+        public static final int buttonRandom=0x7f090009;
+        public static final int buttonRandomAgain=0x7f090007;
+        public static final int chk=0x7f09000c;
+        public static final int chosenDish=0x7f090006;
+        public static final int delete=0x7f09000e;
+        public static final int editText=0x7f090004;
+        public static final int etDish=0x7f09000b;
+        public static final int imgLogo=0x7f090001;
+        public static final int listview=0x7f090008;
+        public static final int name=0x7f09000d;
+        public static final int pager=0x7f090000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_splash=0x7f030001;
-        public static final int dialog=0x7f030002;
-        public static final int dialog_add=0x7f030003;
-        public static final int main_row=0x7f030004;
-        public static final int randomdialog=0x7f030005;
+        public static final int dialog_add=0x7f030002;
+        public static final int dialog_edit=0x7f030003;
+        public static final int dialog_random=0x7f030004;
+        public static final int fragment_meal=0x7f030005;
+        public static final int main_row=0x7f030006;
     }
     public static final class menu {
         public static final int context_menu=0x7f080000;
@@ -75,6 +76,9 @@ public final class R {
         public static final int dialog_random_title=0x7f05000f;
         public static final int menu_delete_title=0x7f05000b;
         public static final int menu_header_title=0x7f05000a;
+        public static final int page_title1=0x7f050010;
+        public static final int page_title2=0x7f050011;
+        public static final int page_title3=0x7f050012;
     }
     public static final class style {
         /** 
