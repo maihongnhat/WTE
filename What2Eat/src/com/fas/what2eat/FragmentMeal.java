@@ -222,7 +222,7 @@ public class FragmentMeal extends Fragment{
 	 * PIC: LamHV
 	 */
 	public void addDish(View view){
-		EditText et = (EditText) currentActivity.findViewById(R.id.etDish);
+		EditText et = (EditText) this.getView().findViewById(R.id.etDish);
 		String dish = et.getText().toString();
 		if(!checkEmptyString(dish, getResources().getString(R.string.checkEmptyNoti)))
 		{
@@ -299,4 +299,5 @@ public class FragmentMeal extends Fragment{
     public void setOutputFileName(String outputFileName) {
 		this.outputFileName = outputFileName;
 	}
+
 }

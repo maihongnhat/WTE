@@ -31,6 +31,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowHomeEnabled(false);
+		actionBar.setDisplayUseLogoEnabled(false);
+		
 		
 		Tab tabBreakfast = actionBar.newTab();
 		tabBreakfast.setText(getResources().getString(R.string.page_title1));
@@ -47,6 +51,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar.addTab(tabBreakfast);
 		actionBar.addTab(tabLunch);
 		actionBar.addTab(tabDinner);
+		
+		
 		
 		
 		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
