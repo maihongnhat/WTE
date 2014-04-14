@@ -6,11 +6,11 @@
  
     <ImageView
         android:id="@+id/imgLogo"
-        android:contentDescription="@string/desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_centerInParent="true"
-        android:src="@drawable/fas" />
- 
+        android:contentDescription="@string/desc"
+        android:src="@drawable/splash_screen"
+        android:scaleType="centerCrop" />
  
 </RelativeLayout>
