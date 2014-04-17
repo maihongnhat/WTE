@@ -97,4 +97,5 @@
       <item >Bánh xèo</item>
       
       </string-array>
+  <color name="gray">d3d3d3</color>
 </resources>

@@ -46,6 +46,8 @@ public class FragmentMeal extends Fragment{
 	private MyFileLib myIO;
 	private Activity currentActivity;
 	private int layoutId;
+	public ListView lv;
+	private ActionMode actionMode;
 		
 	
 	
@@ -74,7 +76,7 @@ public class FragmentMeal extends Fragment{
 		
 		initDishes();
 		
-		ListView lv = (ListView) viewMeal.findViewById(R.id.listview);
+		lv = (ListView) viewMeal.findViewById(R.id.listview);
 		
 		dap = new DishAdapter(dishList, currentActivity);
 			
@@ -125,11 +127,23 @@ public class FragmentMeal extends Fragment{
                         dap.setNewSelection(position, checked);                   
                     } else {
                         dap.removeSelection(position);                
-                    }
+                    }                 
+                 actionMode = mode;
                     mode.setTitle(dap.getSelectedCount() + " selected");
                  
             }
 		});
+        
+//        lv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//			
+//			@Override
+//			public void onFocusChange(View v, boolean hasFocus) {
+//				if (hasFocus == false){
+//					actionMode.finish();
+//				}
+//				
+//			}
+//		});
 			
 	/* EDIT FUNCTION
 	 * 		Purpose	: to rename the pre-assigned dish
@@ -298,6 +312,10 @@ public class FragmentMeal extends Fragment{
     
     public void setOutputFileName(String outputFileName) {
 		this.outputFileName = outputFileName;
+	}
+    
+    public ActionMode getActionMode() {
+		return actionMode;
 	}
 
 }

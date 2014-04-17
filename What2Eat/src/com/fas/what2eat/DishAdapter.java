@@ -26,13 +26,15 @@ public class DishAdapter extends ArrayAdapter<Dish> {
 
 	private ArrayList<Dish> dishList;
 	private Context context;
-	private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
-	private ArrayList<Dish> removeList = new ArrayList<Dish>();
+	private HashMap<Integer, Boolean> mSelection;
+	private ArrayList<Dish> removeList;
 	
 	public DishAdapter(ArrayList<Dish> dl, Context ctx){
 		super(ctx,R.layout.main_row,dl);
 		this.dishList = dl;
 		this.context = ctx;
+		mSelection = new HashMap<Integer, Boolean>();
+		removeList =  new ArrayList<Dish>();
 	}
 	
 	@Override
@@ -60,17 +62,19 @@ public class DishAdapter extends ArrayAdapter<Dish> {
 			}
 		});
 	    
-	    
-	    
-        if (mSelection.get(position) != null) {
-            
+	    	    
+        if (mSelection.get(position) != null) {            
             chb.setChecked(true);
-            removeList.add(dishList.get(position));
+            Dish selectedDish = dishList.get(position);
+            if(!existedInArrayList(selectedDish)){
+            	removeList.add(selectedDish);            	
+            }            
 //            	convertView.setBackgroundColor(Color.BLUE);// this is a selected position so make it red
-        }else
-        {
+        }else{
         	chb.setChecked(false);
-        	removeList.remove(dishList.get(position));
+        	if(removeList.size() != 0){
+        		removeList.remove(dishList.get(position));
+        	}
         }
         return convertView;
 	}
@@ -106,8 +110,9 @@ public class DishAdapter extends ArrayAdapter<Dish> {
     }
 
     public void clearSelection() {
-        mSelection = new HashMap<Integer, Boolean>();
-        notifyDataSetChanged();
+        mSelection.clear();
+        removeList.clear();
+        notifyDataSetChanged();        
     }
     
     public void addDish(String d){
@@ -133,5 +138,18 @@ public class DishAdapter extends ArrayAdapter<Dish> {
     	dishList.removeAll(removeList);
     	notifyDataSetChanged();
 		
+	}
+	
+	public boolean existedInArrayList(Dish dish){
+		boolean existed = false;
+		
+		for(Dish d : removeList){
+			if(d.equals(dish)){
+				existed = true;
+				break;
+			}
+		}
+		
+		return existed;
 	}
 }

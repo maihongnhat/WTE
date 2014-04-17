@@ -16,6 +16,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	public static String outputPath;
 	
+	public int lastSelectedFragmentId;
+	
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -59,7 +61,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			
 			@Override
 			public void onPageSelected(int arg0) {
-				actionBar.setSelectedNavigationItem(arg0);				
+				actionBar.setSelectedNavigationItem(arg0);
+				FragmentMeal fragmentMeal = (FragmentMeal) myAdapter.getItem(lastSelectedFragmentId);
+				fragmentMeal.getActionMode().finish();
+				DishAdapter da = (DishAdapter) fragmentMeal.lv.getAdapter();
+				da.clearSelection();
 			}
 			
 			@Override
