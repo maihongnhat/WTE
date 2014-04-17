@@ -40,7 +40,7 @@ public class FragmentMeal extends Fragment{
 	private Dialog randomDialog;
 	
 	private Random r = new Random();
-	private int lastRandomValue = 0;        
+	private int lastRandomValue = -1;        
     private String outputFileName;
 	private File outputFile;
 	private MyFileLib myIO;
@@ -299,9 +299,13 @@ public class FragmentMeal extends Fragment{
     
     private int generateRandomValue(int range){
     	int returnValue;
-    	do{
-    		returnValue = r.nextInt(range);
-    	}while(returnValue == lastRandomValue);
+    	if(dishList.size() == 1){
+    		returnValue = 0;
+    	}else{
+	    	do{
+	    		returnValue = r.nextInt(range);
+	    	}while(returnValue == lastRandomValue);
+    	}
     	lastRandomValue = returnValue;
     	return returnValue;
     }
