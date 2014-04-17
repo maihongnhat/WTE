@@ -34,7 +34,7 @@ public class FragmentMeal extends Fragment{
 	 * sa			: Array Adapter
 	 * r			: Random variable used for picking up a dish in the list
 	 * randomDialog : Dialog which is shown when user taps on the Random button
-	 * */	 
+	 */	 
 	private ArrayList<Dish> dishList = new ArrayList<Dish>();
 	private DishAdapter dap;
 	private Dialog randomDialog;

@@ -1,19 +1,12 @@
 package com.fas.what2eat;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
-
-import com.fas.what2eat.*;
-
-import android.app.Dialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -29,6 +22,7 @@ public class DishAdapter extends ArrayAdapter<Dish> {
 	private HashMap<Integer, Boolean> mSelection;
 	private ArrayList<Dish> removeList;
 	
+	@SuppressLint("UseSparseArrays")
 	public DishAdapter(ArrayList<Dish> dl, Context ctx){
 		super(ctx,R.layout.main_row,dl);
 		this.dishList = dl;
