@@ -3,6 +3,7 @@ package com.fas.what2eat;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -16,7 +17,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	public static String outputPath;
 	
-	public int lastSelectedFragmentId;
+	public int lastSelectedFragmentId = 0;
 	
 	
 	@Override
@@ -63,7 +64,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			public void onPageSelected(int arg0) {
 				actionBar.setSelectedNavigationItem(arg0);
 				FragmentMeal fragmentMeal = (FragmentMeal) myAdapter.getItem(lastSelectedFragmentId);
-				fragmentMeal.getActionMode().finish();
+				ActionMode actionMode = fragmentMeal.getActionMode();
+				if(actionMode != null){
+					actionMode.finish();
+				}
+				
 				DishAdapter da = (DishAdapter) fragmentMeal.lv.getAdapter();
 				da.clearSelection();
 			}
