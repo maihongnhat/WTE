@@ -67,10 +67,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				ActionMode actionMode = fragmentMeal.getActionMode();
 				if(actionMode != null){
 					actionMode.finish();
-				}
-				
+				}				
 				DishAdapter da = (DishAdapter) fragmentMeal.lv.getAdapter();
 				da.clearSelection();
+				lastSelectedFragmentId = arg0;
 			}
 			
 			@Override
